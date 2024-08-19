@@ -1,0 +1,11 @@
+{
+  "name": "trelpo-backend",
+  "version": "1.0.0",
+  "description": "backend of trelpo a tavel helper providing mobile puncture fix services",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
