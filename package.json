@@ -1,0 +1,20 @@
+{
+  "name": "trelpo-backend",
+  "version": "1.0.0",
+  "description": "backend of trelpo a tavel helper providing mobile puncture fix services",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "travel",
+    "trelpo",
+    "puncture"
+  ],
+  "author": "muhammad hussnain shaker",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}
