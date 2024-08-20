@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 })
 
 app.get("/welcome", (req, res) => {
-  res.send("<h1>Welcome to Trelpo</h1>")
+  res.send("<h1>Welcome to Trelpo.</h1>")
 })
 
 app.get("/photos", (req, res) => {
