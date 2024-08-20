@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "backend of trelpo a tavel helper providing mobile puncture fix services",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js"
   },
