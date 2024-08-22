@@ -1,6 +1,14 @@
+import dotenv from 'dotenv'
 import express from 'express'
+import connectDB from './db/db.js'
 const app = express()
 const port = 3000
+
+dotenv.config({
+  path: './env'
+})
+
+connectDB()
 
 app.use(express.json())
 
