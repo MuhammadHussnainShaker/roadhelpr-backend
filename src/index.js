@@ -1,16 +1,20 @@
 import dotenv from 'dotenv'
-import express from 'express'
 import connectDB from './db/db.js'
-const app = express()
-const port = 3000
+import { app } from './app.js'
+
+const port = process.env.PORT || 3000
 
 dotenv.config({
-  path: './env'
+  path: './env',
 })
 
 connectDB()
-
-app.use(express.json())
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Express server listening at port no.: ${port}`)
+    })
+  })
+  .catch((err) => console.log('MongoDB connection failed: ', err))
 
 const dataArray = [
   { id: 1, name: 'Item 1' },
@@ -21,8 +25,4 @@ const dataArray = [
 app.get('/api', (req, res) => {
   console.log('API hit at', new Date().toLocaleTimeString())
   res.json(dataArray)
-})
-
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`)
 })
