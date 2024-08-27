@@ -6,6 +6,8 @@ const asyncHandler = (requestHandler) => {
   }
 }
 
+export { asyncHandler }
+
 // const asyncHandler = (requestHandler) => {
 //   return async (req, res, next) => {
 //     try {
