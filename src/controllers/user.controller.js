@@ -1,13 +1,15 @@
 import { asyncHandler } from '../utils/asyncHandler.js'
 import { ApiError } from '../utils/ApiError.js'
 import { User } from '../models/videotube/user.model.js'
+import { uploadOnCloudinary } from '../utils/cloudinary.js'
+import { ApiResponse } from '../utils/ApiResponse.js'
 
-const registerUser = asyncHandler((req, res) => {
+const registerUser = asyncHandler(async (req, res) => {
   // take user data from frontend
   // validate the data
   // check if user already exists
-  // check for images, avatar
-  // upload images to cloudinary
+  // check for images, specifically avatar
+  // upload images to cloudinary, check if uploaded
   // create user object and enter into db
   // check for user creation
   // delete password and refresh token from reponse from db
@@ -26,8 +28,35 @@ const registerUser = asyncHandler((req, res) => {
   })
 
   if (userExist) {
-    throw new ApiError(409, 'User with username or email already exists')
+    throw new ApiError(409, 'User with this username or email already exists')
   }
+
+  const avatarLocalPath = req.files?.avatar[0]?.path
+  const coverImageLocalPath = req.files?.coverImage[0]?.path
+
+  if (!avatarLocalPath) throw new ApiError(400, 'Avatar is required')
+
+  const avatar = await uploadOnCloudinary(avatarLocalPath)
+  const coverImage = await uploadOnCloudinary(coverImageLocalPath)
+
+  if (!avatar) throw new ApiError(500, 'Failed to upload avatar to cloudinary')
+
+  const user = User.create({
+    username,
+    email,
+    fullName,
+    avatar: avatar.url,
+    coverImage: coverImage?.url || '',
+    password,
+  })
+
+  if (!user) throw new ApiError(500, 'Failed to create user in database')
+
+  const createdUser = User.findById(user._id).select('-password -refreshToken')
+
+  return res
+    .status(201)
+    .json(new ApiResponse(200, createdUser, 'User created successfully'))
 })
 
 export { registerUser }
