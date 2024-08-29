@@ -1,21 +1,32 @@
 {
-  "name": "trelpo-backend",
+  "name": "roadhelpr-backend",
   "version": "1.0.0",
-  "description": "backend of trelpo a tavel helper providing mobile puncture fix services",
+  "description": "backend of roadhelpr - a tavel helper providing mobile puncture fix services",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "dev": "nodemon -r dotenv/config src/index.js"
   },
   "keywords": [
     "travel",
-    "trelpo",
+    "roadhelpr",
     "puncture"
   ],
   "author": "muhammad hussnain shaker",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cloudinary": "^2.4.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.3",
+    "mongoose-aggregate-paginate-v2": "^1.1.2",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4",
+    "prettier": "^3.3.3"
   }
 }
