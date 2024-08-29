@@ -1,7 +1,7 @@
 {
-  "name": "trelpo-backend",
+  "name": "roadhelpr-backend",
   "version": "1.0.0",
-  "description": "backend of trelpo a tavel helper providing mobile puncture fix services",
+  "description": "backend of roadhelpr - a tavel helper providing mobile puncture fix services",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "keywords": [
     "travel",
-    "trelpo",
+    "roadhelpr",
     "puncture"
   ],
   "author": "muhammad hussnain shaker",
