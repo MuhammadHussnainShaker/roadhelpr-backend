@@ -31,7 +31,7 @@ const userSchema = new Schema(
     role: {
       type: String,
       enum: ['customer', 'serviceprovider'],
-      // default: 'customer',
+      default: 'customer',
     },
     profileImageUrl: {
       type: String, // cloudinary url
