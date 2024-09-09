@@ -4,13 +4,16 @@ import bcrypt from 'bcrypt'
 
 const userSchema = new Schema(
   {
-    username: {
+    fullName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    phoneNumber: {
       type: String,
       required: true,
       unique: true,
-      lowercase: true,
-      trim: true,
-      index: true,
+      minlength: 10,
     },
     email: {
       type: String,
@@ -20,28 +23,19 @@ const userSchema = new Schema(
       trim: true,
       index: true,
     },
-    fullName: {
-      type: String,
-      required: true,
-      trim: true,
-      index: true,
-    },
-    avatar: {
-      type: String, // cloudinary url
-    },
-    coverImage: {
-      type: String, // cloudinary url
-    },
-    watchHistory: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Video',
-      },
-    ],
     password: {
       type: String,
       required: [true, 'Password is required'],
       minlength: 8,
+    },
+    role: {
+      type: String,
+      enum: ['customer', 'serviceprovider'],
+      // default: 'customer',
+    },
+    profileImageUrl: {
+      type: String, // cloudinary url
+      required:true
     },
     refreshToken: {
       type: String,
@@ -53,7 +47,7 @@ const userSchema = new Schema(
 // encrypt password
 userSchema.pre('save', async function (next) {
   if (this.isModified('password')) {
-    this.password = await bcrypt.hash(this.password, 10)
+    this.password = await bcrypt.hash(this.password, 8)
     next()
   } else {
     next()
@@ -70,9 +64,10 @@ userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
     {
       _id: this._id,
-      username: this.username,
-      email: this.email,
       fullName: this.fullName,
+      phoneNumber: this.phoneNumber,
+      email: this.email,
+      role: this.role,
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
@@ -86,6 +81,7 @@ userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {
       _id: this._id,
+      role: this.role,
     },
     process.env.REFRESH_TOKEN_SECRET,
     {
@@ -93,5 +89,6 @@ userSchema.methods.generateRefreshToken = function () {
     }
   )
 }
+
 
 export const User = mongoose.model('User', userSchema)
