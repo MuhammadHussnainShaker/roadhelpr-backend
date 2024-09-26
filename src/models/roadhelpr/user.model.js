@@ -3,45 +3,45 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
 const userSchema = new Schema(
-  {
-    fullName: {
-      type: String,
-      required: true,
-      trim: true,
+    {
+        fullName: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        phoneNumber: {
+            type: String,
+            required: true,
+            unique: true,
+            minlength: 10,
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            lowercase: true,
+            trim: true,
+            index: true,
+        },
+        password: {
+            type: String,
+            required: [true, 'Password is required'],
+            minlength: 8,
+        },
+        role: {
+            type: String,
+            enum: ['customer', 'serviceprovider'],
+            default: 'customer',
+        },
+        profileImageUrl: {
+            type: String, // cloudinary url
+            // required:true
+        },
+        refreshToken: {
+            type: String,
+        },
     },
-    phoneNumber: {
-      type: String,
-      required: true,
-      unique: true,
-      minlength: 10,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true,
-      trim: true,
-      index: true,
-    },
-    password: {
-      type: String,
-      required: [true, 'Password is required'],
-      minlength: 8,
-    },
-    role: {
-      type: String,
-      enum: ['customer', 'serviceprovider'],
-      default: 'customer',
-    },
-    profileImageUrl: {
-      type: String, // cloudinary url
-      required:true
-    },
-    refreshToken: {
-      type: String,
-    },
-  },
-  { timestamps: true }
+    { timestamps: true }
 )
 
 // encrypt password

@@ -113,7 +113,7 @@ const loginUser = asyncHandler(async (req, res) => {
   // send new user document, access token and refresh token to via secure cookies and json to frontend
 
   const { phoneNumber, email, password } = req.body
-
+  console.log(phoneNumber, email, password)
   if (!phoneNumber) {
     throw new ApiError(400, 'Phone number is required')
   }
