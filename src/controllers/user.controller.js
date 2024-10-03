@@ -93,6 +93,12 @@ const registerUser = asyncHandler(async (req, res) => {
         profileImageUrl: profileImage?.url || '',
     })
 
+    if (user.role === 'customer') {
+        await Customer.create({ userId: user._id })
+    } else if (user.role === 'serviceprovider') {
+        await ServiceProvider.create({ userId: user._id })
+    }
+
     if (!user) throw new ApiError(500, 'Failed to create user in database')
 
     const createdUser = await User.findById(user._id).select(

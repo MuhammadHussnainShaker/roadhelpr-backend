@@ -9,7 +9,7 @@ const serviceProviderSchema = new Schema(
         },
         rating: {
             type: Number,
-            default: 0,
+            default: 4,
             min: 0,
             max: 5,
         },
@@ -21,19 +21,19 @@ const serviceProviderSchema = new Schema(
             type: Boolean,
             default: true,
         },
-        reviews: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'Review',
-            },
-        ],
+        // reviews: [
+        //     {
+        //         type: Schema.Types.ObjectId,
+        //         ref: 'Review',
+        //     },
+        // ],
         longitude: {
             type: Number,
-            default: 0,
+            default: 74.3437,
         },
         latitude: {
             type: Number,
-            default: 0,
+            default: 31.5546,
         },
     },
     { timestamps: true }
