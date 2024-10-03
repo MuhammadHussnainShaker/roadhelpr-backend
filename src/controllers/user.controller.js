@@ -1,21 +1,23 @@
 import { asyncHandler } from '../utils/asyncHandler.js'
 import { ApiError } from '../utils/ApiError.js'
 import { User } from '../models/roadhelpr/user.model.js'
+import { Customer } from '../models/roadhelpr/customer.model.js'
+import { ServiceProvider } from '../models/roadhelpr/serviceProvider.model.js'
 import { uploadOnCloudinary } from '../utils/cloudinary.js'
 import { ApiResponse } from '../utils/ApiResponse.js'
 import jwt from 'jsonwebtoken'
 
 const generateAccessAndRefreshTokens = async (userId) => {
-  try {
-    const user = await User.findById(userId)
-    const accessToken = user.generateAccessToken()
-    const refreshToken = user.generateRefreshToken()
-    user.refreshToken = refreshToken
-    await user.save({ validateBeforeSave: false })
-    return { accessToken, refreshToken }
-  } catch (error) {
-    throw new ApiError(500, 'Failed to generate access and refresh tokens')
-  }
+    try {
+        const user = await User.findById(userId)
+        const accessToken = user.generateAccessToken()
+        const refreshToken = user.generateRefreshToken()
+        user.refreshToken = refreshToken
+        await user.save({ validateBeforeSave: false })
+        return { accessToken, refreshToken }
+    } catch (error) {
+        throw new ApiError(500, 'Failed to generate access and refresh tokens')
+    }
 }
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -58,13 +60,13 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     const userExist = await User.findOne({
-        $or: [{ phoneNumber }, { email }],
+        $or: [{ phoneNumber }, { email }, { role }],
     })
 
     if (userExist) {
         throw new ApiError(
             409,
-            'User with this phone number or email already exists'
+            'User with this phone number, email or role already exists'
         )
     }
 
@@ -94,9 +96,15 @@ const registerUser = asyncHandler(async (req, res) => {
     })
 
     if (user.role === 'customer') {
-        await Customer.create({ userId: user._id })
+        console.log('creating customer')
+        const customer = await Customer.create({ userId: user._id })
+        console.log('customer created', customer)
     } else if (user.role === 'serviceprovider') {
-        await ServiceProvider.create({ userId: user._id })
+        console.log('creating service provider')
+        const serviceProvider = await ServiceProvider.create({
+            userId: user._id,
+        })
+        console.log('service provider created', serviceProvider)
     }
 
     if (!user) throw new ApiError(500, 'Failed to create user in database')

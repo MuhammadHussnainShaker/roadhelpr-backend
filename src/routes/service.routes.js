@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { createServiceRequest } from '../controllers/serviceRequest.controller'
+import { createServiceRequest } from '../controllers/serviceRequest.controller.js'
 
 const router = Router()
 

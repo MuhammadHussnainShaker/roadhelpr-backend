@@ -11,6 +11,11 @@ const serviceRequestSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'ServiceProvider',
         },
+        serviceType: {
+            type: String,
+            enum: ['puncturefix', 'towing'],
+            default: 'puncturefix',
+        },
         longitude: {
             type: Number,
             default: 0,

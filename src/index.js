@@ -14,7 +14,7 @@ const server = createServer(app)
 
 const io = new Server(server, {
     cors: {
-        origin: process.env.CORS_ORIGIN || '*',
+        origin: '*',
         methods: ['GET', 'POST'],
     },
 })
