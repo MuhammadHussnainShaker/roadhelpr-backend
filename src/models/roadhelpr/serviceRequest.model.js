@@ -5,7 +5,7 @@ const serviceRequestSchema = new Schema(
         customerId: {
             type: Schema.Types.ObjectId,
             ref: 'Customer',
-            required: true,
+            // required: true,
         },
         serviceProviderId: {
             type: Schema.Types.ObjectId,
@@ -27,14 +27,14 @@ const serviceRequestSchema = new Schema(
             enum: ['pending', 'rejected', 'accepted', 'completed', 'cancelled'],
             default: 'pending',
         },
-        paymentId: {
-            type: Schema.Types.ObjectId,
-            ref: 'Payment',
-        },
-        reviewId: {
-            type: Schema.Types.ObjectId,
-            ref: 'Review',
-        },
+        // paymentId: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'Payment',
+        // },
+        // reviewId: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'Review',
+        // },
     },
     { timestamps: true }
 )
